@@ -1,54 +1,12 @@
 #!/bin/bash
 
-jsonArray() {
-	local arr=($@)
-	local arrlen=${#arr[@]}
-	local i=0
-
-	local output='['
-
-	for x in "${arr[@]}"
-	do
-		i=$((${i} + 1))
-		output+="$x"
-		if [ $i != $arrlen ]; then
-			output+=','
-		fi
-	done
-
-	output+=']'
-
-	echo $output
-}
-
-jsonObject() {
-	local arr=($@)
-	local arrlen=${#arr[@]}
-	local i=0
-
-	local output='{'
-
-	for x in "${arr[@]}"
-	do
-		i=$((${i} + 1))
-		output+="$x"
-		if [ $i != $arrlen ]; then
-			output+=','
-		fi
-	done
-
-	output+='}'
-
-	echo $output
-}
-
-createKeyVal() {
-	echo '"'$1'":"'$2'"'
+print() {
+	echo $@
 }
 
 # START
 
-ITEMS=()
+print '['
 
 ##
 ## Music
@@ -65,23 +23,30 @@ else
 	[[ -n "${MUSIC}" ]] && MUSIC_SRC='sonos'
 fi
 
-ITEMS+=(`jsonObject $(createKeyVal 'target' 'music') $(createKeyVal 'value' "$MUSIC")`)
+print '{'
+	print '"target":"music",'
+	print '"value":"'$MUSIC'"'
+print '},'
 
 ##
 ## Focused window
 ##
 
 FOCUSED_WINDOW=`/usr/local/bin/kwmc query space active tag | sed -n -E 's/^\[[a-z]+\]\ ([a-zA-Z\ ]+).*/\1/p'`
-
-ITEMS+=(`jsonObject $(createKeyVal 'target' 'focused_window') $(createKeyVal 'value' "$FOCUSED_WINDOW")`)
+print '{'
+	print '"target":"focused_window",'
+	print '"value":"'$FOCUSED_WINDOW'",'
+print '},'
 
 ##
 ## Network
 ##
 
 VPN=`osascript ./osx-menubar/scripts/network-vpn-viscocity`
-
-ITEMS+=(`jsonObject $(createKeyVal 'target' 'vpn') $(createKeyVal 'value' "$VPN")`)
+print '{'
+	print '"target":"vpn",'
+	print '"value":"'$VPN'",'
+print '},'
 
 ##
 ## Volume
@@ -98,7 +63,11 @@ else
 	AUDIO_VOLUME_STATE='mute'
 fi
 
-ITEMS+=(`jsonObject $(createKeyVal 'target' 'audio_volume') $(createKeyVal 'value' "$AUDIO_VOLUME") $(createKeyVal 'state' "$AUDIO_VOLUME_STATE")`)
+print '{'
+	print '"target":"audio_volume",'
+	print '"value":"'$AUDIO_VOLUME'%",'
+	print '"state":"'$AUDIO_VOLUME_STATE'"'
+print '},'
 
 ##
 ## Battery
@@ -111,7 +80,7 @@ elif [ $BATTERY -gt 60 ]; then
 	BATTERY_STATE='high'
 elif [ $BATTERY -gt 30 ]; then
 	BATTERY_STATE='medium'
-elif [ $BATTERY -gt 20 ]; then
+elif [ $BATTERY -gt 15 ]; then
 	BATTERY_STATE='low'
 elif [ $BATTERY -gt 0 ]; then
 	BATTERY_STATE='critical'
@@ -119,24 +88,33 @@ else
 	$BATTERY_STATE='unknown'
 fi
 
-ITEMS+=(`jsonObject $(createKeyVal 'target' 'battery') $(createKeyVal 'value' "$BATTERY") $(createKeyVal 'state' "$BATTERY_STATE")`)
+print '{'
+	print '"target":"battery",'
+	print '"value":"'$BATTERY'%",'
+	print '"state":"'$BATTERY_STATE'"'
+print '},'
 
 ##
 ## Date
 ##
 
 DATE=`date +"%d-%m-%Y"`
-
-ITEMS+=(`jsonObject $(createKeyVal 'target' 'date') $(createKeyVal 'value' "$DATE")`)
+print '{'
+	print '"target":"date",'
+	print '"value":"'$DATE'",'
+print '},'
 
 ##
 ## TIME
 ##
 
 TIME=`date +"%H:%M"`
+print '{'
+	print '"target":"time",'
+	print '"value":"'$TIME'",'
+print '}'
 
-ITEMS+=(`jsonObject $(createKeyVal 'target' 'time') $(createKeyVal 'value' "$TIME")`)
-
-echo `jsonArray ${ITEMS[@]}`
 
 # END
+
+echo  ']'
