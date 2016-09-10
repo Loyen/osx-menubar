@@ -1,0 +1,11 @@
+#!/bin/bash
+
+settings=$(osascript -e 'get volume settings')
+volume=$(echo $settings | sed -n -E 's/output volume\:([0-9]+).*/\1/p')
+muted=$(echo $settings | sed -n -E 's/.*output muted\:([a-z]+).*/\1/p')
+
+if [ "$muted" == 'true' ]; then
+	volume=0
+fi
+
+echo "$volume"

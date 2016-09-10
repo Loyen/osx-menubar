@@ -1,0 +1,134 @@
+@font-face {
+	font-family: 'Material Icons';
+	font-style: normal;
+	font-weight: 400;
+	src: url(../fonts/MaterialIcons-Regular.eot);
+	src: local('Material Icons'),
+			 local('MaterialIcons-Regular'),
+			 url(../fonts/MaterialIcons-Regular.woff2) format('woff2'),
+			 url(../fonts/MaterialIcons-Regular.woff) format('woff'),
+			 url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.mdIcon:after {
+	display: inline-block;
+	font-family: 'Material Icons';
+	height: 100%;
+	width: 22px;
+	vertical-align: middle;
+}
+
+.mdIcon--vpn:after { content: 'vpn_lock'; }
+.mdIcon--wifi:after { content: 'network_wifi'; }
+.mdIcon--ethernet:after { content: 'settings_ethernet'; }
+
+.mdIcon--battery:after { content: 'battery_unknown'; }
+.mdIcon--batteryLow:after { content: 'battery_std'; }
+.mdIcon--batteryMedium:after { content: 'battery_full'; }
+.mdIcon--batteryHigh:after { content: 'battery_full'; }
+.mdIcon--batteryCharged:after { content: 'battery_charging_full'; }
+.mdIcon--batteryCritical:after { content: 'battery_alert'; }
+
+.mdIcon--volume:after { content: 'volume_mute'; }
+.mdIcon--volumeLow:after { content: 'volume_low'; }
+.mdIcon--volumeMedium:after { content: 'volume_up'; }
+.mdIcon--volumeHigh:after { content: 'volume_up'; }
+.mdIcon--volumeMute:after { content: 'volume_off'; }
+
+.mdIcon--date:after { content: 'date_range'; }
+.mdIcon--time:after { content: 'access_time'; }
+
+.menubar {
+	display: block;
+	position: absolute;
+	left: 0%;
+	top: 0%;
+
+	width: 100%;
+	height: 22px;
+
+	font-family: Helvetica;
+	font-size: 0.9em;
+	font-weight: normal;
+	line-height: 22px;
+
+	background: rgba(225,225,225,0.8);
+	background-image: linear-gradient(to bottom, rgba(250,250,250,0.8) 0%, rgba(225,225,225,0.8) 100%);
+	color: #000;
+
+	box-shadow: 0.5em 0.5em 1em rgba(0,0,0,0.4);
+
+	-webkit-font-smoothing: antialiased;
+	z-index: -1;
+}
+
+.menubar--dark {
+	background: rgba(0,0,0,0.8);
+	background-image: linear-gradient(to bottom, rgba(50,50,50,0.8) 0%, rgba(25,25,25,0.8) 100%);
+	color: #fff;
+}
+
+.menubar--float {
+	left: 1%;
+	top: 1%;
+
+	width: 98%;
+
+	border-radius: 3px;
+}
+
+.menubar-area {
+	display: inline-block;
+	height: 100%;
+	float: left;
+}
+
+.menubar--left {
+	width: 25%;
+	text-align: left;
+}
+
+.menubar--center {
+	width: 50%;
+	text-align: center;
+}
+
+.menubar--right {
+	width: 25%;
+	text-align: right;
+}
+
+.menubar-items {
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+.menubarItem {
+	display: inline-block;
+	height: 100%;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+}
+
+.menubarItem-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.icon:after {
+	vertical-align: middle;
+}
+
+.t--bold {
+	font-weight: bold;
+}
+
+.icon--menu:after {
+	content: '';
+	font-size: 1.25em;
+	line-height: 1em;
+}
+
+.isHidden {
+	display: none;
+}

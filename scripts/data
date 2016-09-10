@@ -1,0 +1,73 @@
+#!/bin/bash
+
+print() {
+	echo -n $@
+}
+
+# START
+
+print '{'
+
+##
+## Music
+##
+
+# Spotify primary
+MUSIC=`osascript ./osx-menubar/scripts/spotify-current-track`
+MUSIC_SRC=''
+if [[ -n "${MUSIC}" ]]; then
+	MUSIC_SRC='spotify'
+else
+	# Sonos
+	MUSIC=`./osx-menubar/scripts/sonos-current-track`
+	[[ -n "	${MUSIC}" ]] && MUSIC_SRC='sonos'
+fi
+print '"music":"'$MUSIC'",'
+print '"music_source":"'$MUSIC_SRC'",'
+
+##
+## Focused window
+##
+
+FOCUSED_WINDOW=`/usr/local/bin/kwmc query space active tag | sed -n -E 's/^\[[a-z]+\]\ ([a-zA-Z\ ]+).*/\1/p'`
+print '"focused_window":"'$FOCUSED_WINDOW'",'
+
+##
+## Network
+##
+
+VPN=`osascript ./osx-menubar/scripts/network-vpn-viscocity`
+print '"vpn":"'$VPN'",'
+
+##
+## Volume
+##
+
+AUDIO_VOLUME=`./osx-menubar/scripts/audio-volume`
+print '"audio_volume":"'$AUDIO_VOLUME'%",'
+
+##
+## Battery
+##
+
+BATTERY=`./osx-menubar/scripts/battery-level`
+print '"battery":"'$BATTERY'%",'
+
+##
+## Date
+##
+
+DATE=`date +"%d-%m-%Y"`
+print '"date":"'$DATE'",'
+
+##
+## TIME
+##
+
+TIME=`date +"%H:%M"`
+print '"time":"'$TIME'"'
+
+
+# END
+
+echo  '}'

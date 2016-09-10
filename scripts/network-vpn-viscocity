@@ -1,0 +1,10 @@
+repeat until application "Viscosity" is not running
+	tell application "Viscosity"
+		if the state of the first connection is "Connected" then
+			set connectionName to name of the first connection
+			return connectionName
+		else
+			return
+		end if
+	end tell
+end repeat
