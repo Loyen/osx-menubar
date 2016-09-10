@@ -1,5 +1,0 @@
-#!/bin/bash
-
-battery=`pmset -g batt | egrep '[0-9]+\%' -o | egrep '[0-9]+' -o`
-
-echo $battery

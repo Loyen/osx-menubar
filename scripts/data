@@ -73,8 +73,13 @@ print '},'
 ## Battery
 ##
 
-BATTERY=`./osx-menubar/scripts/battery-level`
-if [ $BATTERY == 100 ]; then
+BATTERY=`pmset -g batt`
+BATTERY_STATE=`echo "$BATTERY" | egrep '(dis)?charging' -o`
+BATTERY=`echo "$BATTERY" | egrep '[0-9]+\%' -o | egrep '[0-9]+' -o`
+
+if [ "$BATTERY_STATE" == 'charging' ]; then
+	BATTERY_STATE='charging'
+elif [ $BATTERY == 100 ]; then
 	BATTERY_STATE='charged'
 elif [ $BATTERY -gt 60 ]; then
 	BATTERY_STATE='high'
