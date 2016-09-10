@@ -34,6 +34,8 @@
 #menubarItem-battery[js-state=charged] .mdIcon.icon--battery:after { content: 'battery_charging_full'; }
 #menubarItem-battery[js-state=critical] .mdIcon.icon--battery:after { content: 'battery_alert'; }
 
+#menubarItem-battery[js-state=critical] { color: #F44336; }
+
 #menubarItem-audio_volume[js-state=mute] .mdIcon.icon--volume:after { content: 'volume_off'; }
 #menubarItem-audio_volume[js-state=low] .mdIcon.icon--volume:after { content: 'volume_mute'; }
 #menubarItem-audio_volume[js-state=medium] .mdIcon.icon--volume:after { content: 'volume_down'; }
