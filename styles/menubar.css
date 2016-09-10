@@ -18,25 +18,25 @@
 	vertical-align: middle;
 }
 
-.mdIcon--vpn:after { content: 'vpn_lock'; }
-.mdIcon--wifi:after { content: 'network_wifi'; }
-.mdIcon--ethernet:after { content: 'settings_ethernet'; }
+.mdIcon.icon--vpn:after { content: 'vpn_lock'; }
+.mdIcon.icon--wifi:after { content: 'network_wifi'; }
+.mdIcon.icon--ethernet:after { content: 'settings_ethernet'; }
+.mdIcon.icon--battery:after { content: 'battery_unknown'; }
+.mdIcon.icon--volume:after { content: 'volume_mute'; }
+.mdIcon.icon--date:after { content: 'date_range'; }
+.mdIcon.icon--time:after { content: 'access_time'; }
 
-.mdIcon--battery:after { content: 'battery_unknown'; }
-.mdIcon--batteryLow:after { content: 'battery_std'; }
-.mdIcon--batteryMedium:after { content: 'battery_full'; }
-.mdIcon--batteryHigh:after { content: 'battery_full'; }
-.mdIcon--batteryCharged:after { content: 'battery_charging_full'; }
-.mdIcon--batteryCritical:after { content: 'battery_alert'; }
+#menubarItem-battery[js-state=unknown] .mdIcon.icon--battery:after { content: 'battery_unknown'; }
+#menubarItem-battery[js-state=low] .mdIcon.icon--battery:after { content: 'battery_std'; }
+#menubarItem-battery[js-state=medium] .mdIcon.icon--battery:after { content: 'battery_full'; }
+#menubarItem-battery[js-state=high] .mdIcon.icon--battery:after { content: 'battery_full'; }
+#menubarItem-battery[js-state=charged] .mdIcon.icon--battery:after { content: 'battery_charging_full'; }
+#menubarItem-battery[js-state=critical] .mdIcon.icon--battery:after { content: 'battery_alert'; }
 
-.mdIcon--volume:after { content: 'volume_mute'; }
-.mdIcon--volumeLow:after { content: 'volume_low'; }
-.mdIcon--volumeMedium:after { content: 'volume_up'; }
-.mdIcon--volumeHigh:after { content: 'volume_up'; }
-.mdIcon--volumeMute:after { content: 'volume_off'; }
-
-.mdIcon--date:after { content: 'date_range'; }
-.mdIcon--time:after { content: 'access_time'; }
+#menubarItem-audio_volume[js-state=mute] .mdIcon.icon--volume:after { content: 'volume_off'; }
+#menubarItem-audio_volume[js-state=low] .mdIcon.icon--volume:after { content: 'volume_mute'; }
+#menubarItem-audio_volume[js-state=medium] .mdIcon.icon--volume:after { content: 'volume_down'; }
+#menubarItem-audio_volume[js-state=high] .mdIcon.icon--volume:after { content: 'volume_up'; }
 
 .menubar {
 	display: block;

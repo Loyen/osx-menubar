@@ -1,12 +1,12 @@
 #!/bin/bash
 
 print() {
-	echo -n $@
+	echo $@
 }
 
 # START
 
-print '{'
+print '['
 
 ##
 ## Music
@@ -20,54 +20,101 @@ if [[ -n "${MUSIC}" ]]; then
 else
 	# Sonos
 	MUSIC=`./osx-menubar/scripts/sonos-current-track`
-	[[ -n "	${MUSIC}" ]] && MUSIC_SRC='sonos'
+	[[ -n "${MUSIC}" ]] && MUSIC_SRC='sonos'
 fi
-print '"music":"'$MUSIC'",'
-print '"music_source":"'$MUSIC_SRC'",'
+
+print '{'
+	print '"target":"music",'
+	print '"value":"'$MUSIC'"'
+print '},'
 
 ##
 ## Focused window
 ##
 
 FOCUSED_WINDOW=`/usr/local/bin/kwmc query space active tag | sed -n -E 's/^\[[a-z]+\]\ ([a-zA-Z\ ]+).*/\1/p'`
-print '"focused_window":"'$FOCUSED_WINDOW'",'
+print '{'
+	print '"target":"focused_window",'
+	print '"value":"'$FOCUSED_WINDOW'",'
+print '},'
 
 ##
 ## Network
 ##
 
 VPN=`osascript ./osx-menubar/scripts/network-vpn-viscocity`
-print '"vpn":"'$VPN'",'
+print '{'
+	print '"target":"vpn",'
+	print '"value":"'$VPN'",'
+print '},'
 
 ##
 ## Volume
 ##
 
 AUDIO_VOLUME=`./osx-menubar/scripts/audio-volume`
-print '"audio_volume":"'$AUDIO_VOLUME'%",'
+if [ $AUDIO_VOLUME -gt 60 ]; then
+	AUDIO_VOLUME_STATE='high'
+elif [ $AUDIO_VOLUME -gt 30 ]; then
+	AUDIO_VOLUME_STATE='medium'
+elif [ $AUDIO_VOLUME -gt 0 ]; then
+	AUDIO_VOLUME_STATE='low'
+else
+	AUDIO_VOLUME_STATE='mute'
+fi
+
+print '{'
+	print '"target":"audio_volume",'
+	print '"value":"'$AUDIO_VOLUME'%",'
+	print '"state":"'$AUDIO_VOLUME_STATE'"'
+print '},'
 
 ##
 ## Battery
 ##
 
 BATTERY=`./osx-menubar/scripts/battery-level`
-print '"battery":"'$BATTERY'%",'
+if [ $BATTERY == 100 ]; then
+	BATTERY_STATE='charged'
+elif [ $BATTERY -gt 60 ]; then
+	BATTERY_STATE='high'
+elif [ $BATTERY -gt 30 ]; then
+	BATTERY_STATE='medium'
+elif [ $BATTERY -gt 15 ]; then
+	BATTERY_STATE='low'
+elif [ $BATTERY -gt 0 ]; then
+	BATTERY_STATE='critical'
+else
+	$BATTERY_STATE='unknown'
+fi
+
+print '{'
+	print '"target":"battery",'
+	print '"value":"'$BATTERY'%",'
+	print '"state":"'$BATTERY_STATE'"'
+print '},'
 
 ##
 ## Date
 ##
 
 DATE=`date +"%d-%m-%Y"`
-print '"date":"'$DATE'",'
+print '{'
+	print '"target":"date",'
+	print '"value":"'$DATE'",'
+print '},'
 
 ##
 ## TIME
 ##
 
 TIME=`date +"%H:%M"`
-print '"time":"'$TIME'"'
+print '{'
+	print '"target":"time",'
+	print '"value":"'$TIME'",'
+print '}'
 
 
 # END
 
-echo  '}'
+echo  ']'
